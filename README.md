@@ -1,6 +1,6 @@
 # EpiLink docker setup
 
-![Docker badge](https://img.shields.io/docker/build/litarvan/epilink?style=for-the-badge)
+![Docker badge](https://img.shields.io/docker/cloud/build/litarvan/epilink?style=for-the-badge)
 
 ## Usage
 
