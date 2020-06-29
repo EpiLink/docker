@@ -16,7 +16,6 @@ name: My EpiLink Instance
 # HTTP server configuration
 server:
   # The port that should be used for the server.
-  # If you change it, don't forget to do the same in the docker-compose.yml file
   port: 9090
   # Either None, Forwarded or XForwarded depending on how you use your reverse proxy to transmit the remote host's
   # information
@@ -26,6 +25,7 @@ server:
   # - Forwarded: Use the Forwarded standard header to get information about the remote host
   proxyType: None
   # The URL of the front-end, WITH a trailing slash /, or null if the URL is unknown
+  # Leave as ~ if the front-end is bootstrapped (i.e. the front-end is served on the same server as the back-end)
   frontendUrl: ~
   # (Optional) Custom logo that will be displayed to the user. ~ means default, in which case it will show EpiLink's
   # logo
@@ -35,13 +35,18 @@ server:
     - name: My Footer URL
       url: "https://example.com"
 
-# Name and location of the EpiLink SQLite database (relative to the current directory)
+# Name and location of the EpiLink SQLite database
 db: data/epilink.db
 
 # Redis URI to the Redis instance to use
 # Format: https://github.com/lettuce-io/lettuce-core/wiki/Redis-URI-and-connection-details#uri-syntax
 # Currently bound to the Redis created by the docker-compose file
 redis: "redis://redis:6379"
+
+# List of administrators (Discord IDs of the administrator)
+# For example admins: [12354, 987234, 12341]
+# /!\ Administrators have a lot of power over the application, be careful with who you trust!
+admins: []
 
 # The tokens to use when connecting
 # Note that providing them in the configuration file is optional. If you do not define them here, you can pass them as
@@ -66,17 +71,19 @@ tokens:
   # Terms of services
   # tos: |
   #     <p> My terms of services...</p>
-  # OR (relative to the config/ folder)
+  # OR
   # tosFile: myTermsOfServices.html
 
   # Privacy policy
   # policy: |
   #     <p>My privacy policy...</p>
-  # OR (relative to the config/ folder)
+  # OR
   # policyFile: myPrivacyPolicy.html
 
   # ID Prompt text disclaimer
   # identityPromptText: <p>My text...</p>
+
+# You can also add a "privacy:" section to enable/disable some notifications. See the maintainer guide for more details.
 
 # Configuration for everything related to handling Discord servers
 # When something is optional, you can omit it entirely.
@@ -89,7 +96,7 @@ discord:
   #----#
   #rulebook: |
   #  "MyRule" { ... }
-  # OR (relative to the config/ folder) #
+  # OR #
   #rulebookFile: myFile.rule.kts
   # See the documentation on custom roles for more details on this option. You can omit it if you do not need it.
   roles: []

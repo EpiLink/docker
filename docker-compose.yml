@@ -5,7 +5,7 @@ services:
     restart: always
     command: redis-server
   epilink:
-    image: litarvan/epilink:0.2.0
+    image: litarvan/epilink:0.3.1
     restart: always
     env_file: ./vars.env
     volumes:
